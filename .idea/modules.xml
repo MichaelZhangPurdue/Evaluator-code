@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Evaluator-Kotlin.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Evaluator-Kotlin.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Evaluator-Kotlin.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Evaluator-Kotlin.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Evaluator-code.iml" filepath="$PROJECT_DIR$/.idea/Evaluator-code.iml" />
     </modules>
   </component>
 </project>

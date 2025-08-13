@@ -17,7 +17,7 @@
 rule CXX_COMPILER__opencv_jni_shared_Debug
   depfile = $DEP_FILE
   deps = gcc
-  command = /Users/paolowang/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/Users/paolowang/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = H:\Android\ndk\27.0.12077973\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe --target=aarch64-none-linux-android21 --sysroot=H:/Android/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building CXX object $out
 
 
@@ -25,7 +25,7 @@ rule CXX_COMPILER__opencv_jni_shared_Debug
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__opencv_jni_shared_Debug
-  command = $PRE_LINK && /Users/paolowang/Library/Android/sdk/cmake/3.22.1/bin/cmake -E rm -f $TARGET_FILE && /Users/paolowang/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar qc $TARGET_FILE $LINK_FLAGS $in && /Users/paolowang/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib $TARGET_FILE && /Users/paolowang/Library/Android/sdk/cmake/3.22.1/bin/cmake -E touch $TARGET_FILE && $POST_BUILD
+  command = cmd.exe /C "$PRE_LINK && H:\Android\cmake\3.22.1\bin\cmake.exe -E rm -f $TARGET_FILE && H:\Android\ndk\27.0.12077973\toolchains\llvm\prebuilt\windows-x86_64\bin\llvm-ar.exe qc $TARGET_FILE $LINK_FLAGS $in && H:\Android\ndk\27.0.12077973\toolchains\llvm\prebuilt\windows-x86_64\bin\llvm-ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
 
@@ -42,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /Users/paolowang/Library/Android/sdk/cmake/3.22.1/bin/cmake --regenerate-during-build -S/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper -B/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/arm64-v8a
+  command = H:\Android\cmake\3.22.1\bin\cmake.exe --regenerate-during-build -SH:\Projects\EvalCodeLatestBranch\Evaluator-code\kotlin_app\cv\libcxx_helper -BH:\Projects\EvalCodeLatestBranch\Evaluator-code\kotlin_app\cv\.cxx\Debug\4u724431\arm64-v8a
   description = Re-running CMake...
   generator = 1
 
@@ -51,7 +51,7 @@ rule RERUN_CMAKE
 # Rule for cleaning all built files.
 
 rule CLEAN
-  command = /Users/paolowang/Library/Android/sdk/cmake/3.22.1/bin/ninja $FILE_ARG -t clean $TARGETS
+  command = H:\Android\cmake\3.22.1\bin\ninja.exe $FILE_ARG -t clean $TARGETS
   description = Cleaning all built files...
 
 
@@ -59,6 +59,6 @@ rule CLEAN
 # Rule for printing all primary targets available.
 
 rule HELP
-  command = /Users/paolowang/Library/Android/sdk/cmake/3.22.1/bin/ninja -t targets
+  command = H:\Android\cmake\3.22.1\bin\ninja.exe -t targets
   description = All primary targets available:
 

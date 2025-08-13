@@ -1,8 +1,8 @@
-# Install script for directory: /Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper
+# Install script for directory: H:/Projects/EvalCodeLatestBranch/Evaluator-code/kotlin_app/cv/libcxx_helper
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/usr/local")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/opencv_jni_shared")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,7 +39,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/Users/paolowang/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-objdump")
+  set(CMAKE_OBJDUMP "H:/Android/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/bin/llvm-objdump.exe")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/arm64-v8a/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "H:/Projects/EvalCodeLatestBranch/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/arm64-v8a/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

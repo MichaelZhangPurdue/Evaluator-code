@@ -2,7 +2,7 @@
   {
     "level_": 0,
     "message_": "Start JSON generation. Platform version: 21 min SDK version: x86",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -14,8 +14,8 @@
   },
   {
     "level_": 0,
-    "message_": "rebuilding JSON /Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/x86/android_gradle_build.json due to:",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "message_": "rebuilding JSON H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\.cxx\\Debug\\4u724431\\x86\\android_gradle_build.json due to:",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -28,7 +28,7 @@
   {
     "level_": 0,
     "message_": "- a hard configure file changed, will remove stale configuration folder",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -40,8 +40,8 @@
   },
   {
     "level_": 0,
-    "message_": "  - /Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/x86/metadata_generation_command.txt (LAST_MODIFIED_CHANGED)",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "message_": "  - H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\.cxx\\Debug\\4u724431\\x86\\metadata_generation_command.txt (LAST_MODIFIED_CHANGED)",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -53,8 +53,8 @@
   },
   {
     "level_": 0,
-    "message_": "removing stale contents from \u0027/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/x86\u0027",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "message_": "removing stale contents from \u0027H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\.cxx\\Debug\\4u724431\\x86\u0027",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -66,8 +66,8 @@
   },
   {
     "level_": 0,
-    "message_": "created folder \u0027/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/x86\u0027",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "message_": "created folder \u0027H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\.cxx\\Debug\\4u724431\\x86\u0027",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -79,8 +79,8 @@
   },
   {
     "level_": 0,
-    "message_": "executing cmake /Users/paolowang/Library/Android/sdk/cmake/3.22.1/bin/cmake \\\n  -H/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper \\\n  -DCMAKE_SYSTEM_NAME\u003dAndroid \\\n  -DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON \\\n  -DCMAKE_SYSTEM_VERSION\u003d21 \\\n  -DANDROID_PLATFORM\u003dandroid-21 \\\n  -DANDROID_ABI\u003dx86 \\\n  -DCMAKE_ANDROID_ARCH_ABI\u003dx86 \\\n  -DANDROID_NDK\u003d/Users/paolowang/Library/Android/sdk/ndk/27.0.12077973 \\\n  -DCMAKE_ANDROID_NDK\u003d/Users/paolowang/Library/Android/sdk/ndk/27.0.12077973 \\\n  -DCMAKE_TOOLCHAIN_FILE\u003d/Users/paolowang/Library/Android/sdk/ndk/27.0.12077973/build/cmake/android.toolchain.cmake \\\n  -DCMAKE_MAKE_PROGRAM\u003d/Users/paolowang/Library/Android/sdk/cmake/3.22.1/bin/ninja \\\n  -DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/build/intermediates/cxx/Debug/4u724431/obj/x86 \\\n  -DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003d/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/build/intermediates/cxx/Debug/4u724431/obj/x86 \\\n  -DCMAKE_BUILD_TYPE\u003dDebug \\\n  -B/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/x86 \\\n  -GNinja \\\n  -DANDROID_STL\u003dc++_shared\n",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "message_": "executing cmake @echo off\n\"H:\\\\Android\\\\cmake\\\\3.22.1\\\\bin\\\\cmake.exe\" ^\n  \"-HH:\\\\Projects\\\\EvalCodeLatestBranch\\\\Evaluator-code\\\\kotlin_app\\\\cv\\\\libcxx_helper\" ^\n  \"-DCMAKE_SYSTEM_NAME\u003dAndroid\" ^\n  \"-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\" ^\n  \"-DCMAKE_SYSTEM_VERSION\u003d21\" ^\n  \"-DANDROID_PLATFORM\u003dandroid-21\" ^\n  \"-DANDROID_ABI\u003dx86\" ^\n  \"-DCMAKE_ANDROID_ARCH_ABI\u003dx86\" ^\n  \"-DANDROID_NDK\u003dH:\\\\Android\\\\ndk\\\\27.0.12077973\" ^\n  \"-DCMAKE_ANDROID_NDK\u003dH:\\\\Android\\\\ndk\\\\27.0.12077973\" ^\n  \"-DCMAKE_TOOLCHAIN_FILE\u003dH:\\\\Android\\\\ndk\\\\27.0.12077973\\\\build\\\\cmake\\\\android.toolchain.cmake\" ^\n  \"-DCMAKE_MAKE_PROGRAM\u003dH:\\\\Android\\\\cmake\\\\3.22.1\\\\bin\\\\ninja.exe\" ^\n  \"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003dH:\\\\Projects\\\\EvalCodeLatestBranch\\\\Evaluator-code\\\\kotlin_app\\\\cv\\\\build\\\\intermediates\\\\cxx\\\\Debug\\\\4u724431\\\\obj\\\\x86\" ^\n  \"-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003dH:\\\\Projects\\\\EvalCodeLatestBranch\\\\Evaluator-code\\\\kotlin_app\\\\cv\\\\build\\\\intermediates\\\\cxx\\\\Debug\\\\4u724431\\\\obj\\\\x86\" ^\n  \"-DCMAKE_BUILD_TYPE\u003dDebug\" ^\n  \"-BH:\\\\Projects\\\\EvalCodeLatestBranch\\\\Evaluator-code\\\\kotlin_app\\\\cv\\\\.cxx\\\\Debug\\\\4u724431\\\\x86\" ^\n  -GNinja ^\n  \"-DANDROID_STL\u003dc++_shared\"\n",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -92,8 +92,8 @@
   },
   {
     "level_": 0,
-    "message_": "/Users/paolowang/Library/Android/sdk/cmake/3.22.1/bin/cmake \\\n  -H/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper \\\n  -DCMAKE_SYSTEM_NAME\u003dAndroid \\\n  -DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON \\\n  -DCMAKE_SYSTEM_VERSION\u003d21 \\\n  -DANDROID_PLATFORM\u003dandroid-21 \\\n  -DANDROID_ABI\u003dx86 \\\n  -DCMAKE_ANDROID_ARCH_ABI\u003dx86 \\\n  -DANDROID_NDK\u003d/Users/paolowang/Library/Android/sdk/ndk/27.0.12077973 \\\n  -DCMAKE_ANDROID_NDK\u003d/Users/paolowang/Library/Android/sdk/ndk/27.0.12077973 \\\n  -DCMAKE_TOOLCHAIN_FILE\u003d/Users/paolowang/Library/Android/sdk/ndk/27.0.12077973/build/cmake/android.toolchain.cmake \\\n  -DCMAKE_MAKE_PROGRAM\u003d/Users/paolowang/Library/Android/sdk/cmake/3.22.1/bin/ninja \\\n  -DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/build/intermediates/cxx/Debug/4u724431/obj/x86 \\\n  -DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003d/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/build/intermediates/cxx/Debug/4u724431/obj/x86 \\\n  -DCMAKE_BUILD_TYPE\u003dDebug \\\n  -B/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/x86 \\\n  -GNinja \\\n  -DANDROID_STL\u003dc++_shared\n",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "message_": "@echo off\n\"H:\\\\Android\\\\cmake\\\\3.22.1\\\\bin\\\\cmake.exe\" ^\n  \"-HH:\\\\Projects\\\\EvalCodeLatestBranch\\\\Evaluator-code\\\\kotlin_app\\\\cv\\\\libcxx_helper\" ^\n  \"-DCMAKE_SYSTEM_NAME\u003dAndroid\" ^\n  \"-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\" ^\n  \"-DCMAKE_SYSTEM_VERSION\u003d21\" ^\n  \"-DANDROID_PLATFORM\u003dandroid-21\" ^\n  \"-DANDROID_ABI\u003dx86\" ^\n  \"-DCMAKE_ANDROID_ARCH_ABI\u003dx86\" ^\n  \"-DANDROID_NDK\u003dH:\\\\Android\\\\ndk\\\\27.0.12077973\" ^\n  \"-DCMAKE_ANDROID_NDK\u003dH:\\\\Android\\\\ndk\\\\27.0.12077973\" ^\n  \"-DCMAKE_TOOLCHAIN_FILE\u003dH:\\\\Android\\\\ndk\\\\27.0.12077973\\\\build\\\\cmake\\\\android.toolchain.cmake\" ^\n  \"-DCMAKE_MAKE_PROGRAM\u003dH:\\\\Android\\\\cmake\\\\3.22.1\\\\bin\\\\ninja.exe\" ^\n  \"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003dH:\\\\Projects\\\\EvalCodeLatestBranch\\\\Evaluator-code\\\\kotlin_app\\\\cv\\\\build\\\\intermediates\\\\cxx\\\\Debug\\\\4u724431\\\\obj\\\\x86\" ^\n  \"-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003dH:\\\\Projects\\\\EvalCodeLatestBranch\\\\Evaluator-code\\\\kotlin_app\\\\cv\\\\build\\\\intermediates\\\\cxx\\\\Debug\\\\4u724431\\\\obj\\\\x86\" ^\n  \"-DCMAKE_BUILD_TYPE\u003dDebug\" ^\n  \"-BH:\\\\Projects\\\\EvalCodeLatestBranch\\\\Evaluator-code\\\\kotlin_app\\\\cv\\\\.cxx\\\\Debug\\\\4u724431\\\\x86\" ^\n  -GNinja ^\n  \"-DANDROID_STL\u003dc++_shared\"\n",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -106,7 +106,7 @@
   {
     "level_": 0,
     "message_": "Received process result: 0",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -118,8 +118,8 @@
   },
   {
     "level_": 0,
-    "message_": "Exiting generation of /Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/x86/compile_commands.json.bin normally",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "message_": "Exiting generation of H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\.cxx\\Debug\\4u724431\\x86\\compile_commands.json.bin normally",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -132,7 +132,7 @@
   {
     "level_": 0,
     "message_": "done executing cmake",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -144,8 +144,8 @@
   },
   {
     "level_": 0,
-    "message_": "hard linked /Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/Debug/4u724431/x86/compile_commands.json to /Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/.cxx/tools/debug/x86/compile_commands.json",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "message_": "hard linked H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\.cxx\\Debug\\4u724431\\x86\\compile_commands.json to H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\.cxx\\tools\\debug\\x86\\compile_commands.json",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -158,7 +158,7 @@
   {
     "level_": 0,
     "message_": "JSON generation completed without problems",
-    "file_": "/Users/paolowang/Documents/GitHub/Evaluator-code/kotlin_app/cv/libcxx_helper/CMakeLists.txt",
+    "file_": "H:\\Projects\\EvalCodeLatestBranch\\Evaluator-code\\kotlin_app\\cv\\libcxx_helper\\CMakeLists.txt",
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
