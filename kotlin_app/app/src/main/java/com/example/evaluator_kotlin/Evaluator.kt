@@ -1,6 +1,7 @@
 package com.example.evaluator_kotlin
 
 import android.content.Context
+import android.os.SystemClock
 import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tflite.java.TfLite
@@ -40,7 +41,7 @@ class Evaluator {
             model = InterpreterApi.create(
                 FileUtil.loadMappedFile(
                     MainActivity.applicationContext(),
-                    "nano_best_float32.tflite"
+                    "nano_float16.tflite"
                 ),
                 interpreterOption
             )
@@ -179,6 +180,7 @@ class Evaluator {
 
     fun runModel(frame: Mat): List<List<Float>> {
         // Create input and output buffers
+        var inferenceTime = SystemClock.uptimeMillis()
         model.allocateTensors()
 
         // Prepare input buffer
@@ -219,7 +221,14 @@ class Evaluator {
         val outputArray =
             Array(outputShape[0]) { Array(outputShape[1]) { FloatArray(outputShape[2]) } } // (1, 300, 7)
 
+        inferenceTime = SystemClock.uptimeMillis() - inferenceTime
+        println("PREPROCESS INFERENCE TIME: $inferenceTime ")
+        inferenceTime = SystemClock.uptimeMillis()
+
         model.run(inputArray, outputArray)
+        inferenceTime = SystemClock.uptimeMillis() - inferenceTime
+        println("MODEL INFERENCE TIME: $inferenceTime ")
+        inferenceTime = SystemClock.uptimeMillis()
         val outputs = outputArray[0] // shape: [N, 7]
         // Convert output to Array<FloatArray>
         val numDetections = outputs.size / 7
@@ -239,8 +248,9 @@ class Evaluator {
             pad = preprocessed.second
         )
         //println("Detections: $results")
-        println("Detections: ${convertYolo(results)}")
-
+        //println("Detections: ${convertYolo(results)}")
+        inferenceTime = SystemClock.uptimeMillis() - inferenceTime
+        println("POSTPROCESS INFERENCE TIME: $inferenceTime ")
         return results
     }
 
