@@ -1,27 +1,28 @@
 package com.example.evaluator_kotlin
 import android.graphics.Bitmap
-import android.util.Log
-import org.tensorflow.lite.InterpreterApi
-import org.tensorflow.lite.support.common.FileUtil
-import java.util.concurrent.CountDownLatch
-import kotlin.math.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.os.SystemClock
 import org.tensorflow.lite.DataType
+import org.tensorflow.lite.Interpreter
+import org.tensorflow.lite.nnapi.NnApiDelegate
+import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.common.ops.CastOp
 import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
-import android.os.SystemClock
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import org.tensorflow.lite.Interpreter
+import java.util.concurrent.CountDownLatch
 import org.tensorflow.lite.gpu.CompatibilityList
 import org.tensorflow.lite.gpu.GpuDelegate
+import kotlin.math.*
+
 
 class Detector {
 
     private var interpreter: Interpreter
+    private var nnApiDelegate: NnApiDelegate? = null
     private var labels = mutableListOf<String>()
 
     private var tensorWidth = 0
@@ -58,6 +59,10 @@ class Detector {
 
     init {
         val options = Interpreter.Options().apply{
+            //this.setNumThreads(4)
+            //this.setUseXNNPACK(true)
+            //Log.i("Detector", "isDelegateSupportedOnThisDevice: ${CompatibilityList().isDelegateSupportedOnThisDevice}")
+            //this.addDelegate(GpuDelegate(CompatibilityList().bestOptionsForThisDevice))
 
             if (CompatibilityList().isDelegateSupportedOnThisDevice) {
                 this.addDelegate(GpuDelegate(CompatibilityList().bestOptionsForThisDevice))
@@ -67,9 +72,9 @@ class Detector {
             }
 
 
-
             //this.setNumThreads(4)
         }
+
         /*
         interpreter = Interpreter.create(
             FileUtil.loadMappedFile(

@@ -1,3 +1,5 @@
+import com.example.evaluator_kotlin.Detector.returnBow
+
 class Profile {
     data class SessionSummary(
         val heightBreakdown: Map<String, Double>, 
@@ -23,7 +25,7 @@ class Profile {
         dict[userId]?.add(data)
     }
 
-    fun analyzeSession(session: List<Detector.returnBow>): SessionSummary {
+    fun analyzeSession(session: List<returnBow>): SessionSummary {
         if (session.isEmpty()) {
             return SessionSummary(emptyMap(), emptyMap())
         }
