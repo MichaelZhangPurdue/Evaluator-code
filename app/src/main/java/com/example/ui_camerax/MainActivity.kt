@@ -2,6 +2,10 @@ package com.example.ui_camerax
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageFormat
+import android.graphics.Matrix
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -20,25 +24,38 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import com.example.evaluator_kotlin.Detector
 import com.example.ui_camerax.databinding.ActivityMainBinding
 import java.nio.ByteBuffer
+import androidx.core.graphics.createBitmap
+
 
 typealias LumaListener = (luma: Double) -> Unit
 
-class MainActivity : AppCompatActivity() {
+
+
+class MainActivity : AppCompatActivity(), Detector.DetectorListener {
     private lateinit var viewBinding: ActivityMainBinding
 
     private var imageCapture: ImageCapture? = null
+    private var detector: Detector? = null
+
 
     private var videoCapture: VideoCapture<Recorder>? = null
     private var recording: Recording? = null
+    private var imageAnalyzer: ImageAnalysis? = null
+    private var frontCamera = false
+
+    private lateinit var overlayView: OverlayView
 
     private lateinit var cameraExecutor: ExecutorService
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        overlayView = viewBinding.overlayView
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -54,11 +71,13 @@ class MainActivity : AppCompatActivity() {
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
+
     private fun takePhoto() {}
 
     private fun captureVideo() {}
 
     private fun startCamera() {
+        detector = Detector(this, this)
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener({
@@ -74,12 +93,28 @@ class MainActivity : AppCompatActivity() {
 
             //IMage analyzer stuff
             val imageAnalyzer = ImageAnalysis.Builder()
+                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
+                .setTargetRotation(viewBinding.viewFinder.display.rotation)
                 .build()
-                .also {
-                    it.setAnalyzer(cameraExecutor, LuminosityAnalyzer { luma ->
-                        Log.d(TAG, "Average luminosity: $luma")
-                    })
+
+            imageAnalyzer.setAnalyzer(cameraExecutor) { imageProxy ->
+                val bitmapBuffer =
+                    createBitmap(imageProxy.width, imageProxy.height)
+                imageProxy.use { bitmapBuffer.copyPixelsFromBuffer(imageProxy.planes[0].buffer) }
+                imageProxy.close()
+
+
+                val matrix = Matrix().apply {
+                    postRotate(imageProxy.imageInfo.rotationDegrees.toFloat())
                 }
+                val rotatedBitmap = Bitmap.createBitmap(
+                    bitmapBuffer, 0, 0, bitmapBuffer.width, bitmapBuffer.height,
+                    matrix, true
+                )
+                detector?.detect(rotatedBitmap)
+
+            }
 
             // Select back camera as a default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
@@ -114,6 +149,23 @@ class MainActivity : AppCompatActivity() {
         cameraExecutor.shutdown()
     }
 
+    override fun noDetect() {
+        println("no detect")
+        //HANDLE THIS CASE BY TELLING USER
+        runOnUiThread {
+            overlayView.updateResults(Detector.returnBow(-2, null, null, 0))
+        }
+    }
+
+    override fun detected(results: Detector.YoloResults) {
+        println("DETECTED")
+        val bowPoints = detector?.classify(results)
+        runOnUiThread {
+            overlayView.updateResults(bowPoints!!)
+        }
+        println(bowPoints)
+    }
+
     private val activityResultLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions())
@@ -133,27 +185,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    private class LuminosityAnalyzer(private val listener: LumaListener) : ImageAnalysis.Analyzer {
 
-        private fun ByteBuffer.toByteArray(): ByteArray {
-            rewind()    // Rewind the buffer to zero
-            val data = ByteArray(remaining())
-            get(data)   // Copy the buffer into a byte array
-            return data // Return the byte array
-        }
-
-        override fun analyze(image: ImageProxy) {
-
-            val buffer = image.planes[0].buffer
-            val data = buffer.toByteArray()
-            val pixels = data.map { it.toInt() and 0xFF }
-            val luma = pixels.average()
-
-            listener(luma)
-
-            image.close()
-        }
-    }
 
 
     companion object {
@@ -168,5 +200,6 @@ class MainActivity : AppCompatActivity() {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 }
             }.toTypedArray()
+
     }
 }
