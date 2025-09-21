@@ -28,6 +28,8 @@ import com.example.evaluator_kotlin.Detector
 import com.example.ui_camerax.databinding.ActivityMainBinding
 import java.nio.ByteBuffer
 import androidx.core.graphics.createBitmap
+import java.io.File
+import java.io.FileOutputStream
 
 
 typealias LumaListener = (luma: Double) -> Unit
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
     private var recording: Recording? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var frontCamera = false
+    private var foundDims = false
 
     private lateinit var overlayView: OverlayView
 
@@ -93,6 +96,7 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
 
             //IMage analyzer stuff
             val imageAnalyzer = ImageAnalysis.Builder()
+
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
                 .setTargetRotation(viewBinding.viewFinder.display.rotation)
@@ -100,10 +104,8 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
 
             imageAnalyzer.setAnalyzer(cameraExecutor) { imageProxy ->
                 val bitmapBuffer =
-                    createBitmap(imageProxy.width, imageProxy.height)
+                    createBitmap(imageProxy.width, imageProxy.height    )
                 imageProxy.use { bitmapBuffer.copyPixelsFromBuffer(imageProxy.planes[0].buffer) }
-                imageProxy.close()
-
 
                 val matrix = Matrix().apply {
                     postRotate(imageProxy.imageInfo.rotationDegrees.toFloat())
@@ -158,6 +160,14 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
     }
 
     override fun detected(results: Detector.YoloResults) {
+        if (!foundDims) {
+            var dims: Pair<Int, Int> ?= null
+            dims = overlayView.returnDims()
+            if (dims.first != 0) {
+                foundDims = true
+                detector?.setDimensions(dims)
+            }
+        }
         println("DETECTED")
         val bowPoints = detector?.classify(results)
         runOnUiThread {

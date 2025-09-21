@@ -44,7 +44,7 @@ class Detector (
     private var frameCounter = 0
     private var stringYCoordHeights: MutableList<List<Int>> = mutableListOf()
     private val numWaitFrames = 10
-    private var ogWdith: Int = 1
+    private var ogWidth: Int = 1
     private var ogHeight: Int = 1
 
 
@@ -145,9 +145,10 @@ class Detector (
         var y: Double
     )
 
-    fun setDimensions(width: Int, height: Int) {
-        ogWdith = width
-        ogHeight = height
+    fun setDimensions(dims: Pair<Int, Int>) {
+        ogWidth = dims.first
+        ogHeight = dims.second
+        println("dims: $dims")
     }
 
 
@@ -155,8 +156,6 @@ class Detector (
 
         //ogWdith = frame.width
         //ogHeight = frame.height
-        ogWdith = 1
-        ogHeight = 1
         var inferenceTime = SystemClock.uptimeMillis()
         var results = YoloResults(null, null)
         if (tensorWidth == 0
@@ -192,10 +191,10 @@ class Detector (
 
         for (box in bestBoxes) {
             if (box.cls == 0 && box.conf > bowConf) {
-                results.bowResults = rotatedRectToPoints(box.x, box.y, box.width, box.height, box.angle).toMutableList()
+                results.bowResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, box.width * ogWidth, box.height * ogHeight, box.angle - Math.PI.toFloat() / 2).toMutableList()
                 bowConf = box.conf
             } else if (box.cls == 1 && box.conf > stringConf) {
-                results.stringResults = rotatedRectToPoints(box.x, box.y, box.width, box.height, box.angle).toMutableList()
+                results.stringResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, box.width * ogWidth, box.height * ogHeight, box.angle).toMutableList()
                 stringConf = box.conf
             }
         }
@@ -248,8 +247,9 @@ class Detector (
     private fun rotatedRectToPoints(cx: Float, cy: Float, w: Float, h: Float, angleRad: Float): List<Point> {
         val halfW = w / 2
         val halfH = h / 2
-        val cosA = cos(angleRad - Math.PI.toFloat() / 2)
-        val sinA = sin(angleRad - Math.PI.toFloat() / 2)
+        println("ANGLE $angleRad")
+        val cosA = cos(angleRad)
+        val sinA = sin(angleRad)
         val corners = listOf(
             Pair(-halfW, -halfH),
             Pair(halfW, -halfH),
@@ -259,7 +259,7 @@ class Detector (
         return corners.map { (x, y) ->
             val xRot = x * cosA - y * sinA + cx
             val yRot = x * sinA + y * cosA + cy
-            Point(xRot.toDouble() * ogWdith, yRot.toDouble() * ogHeight)
+            Point(xRot.toDouble(), yRot.toDouble())
         }
     }
 
@@ -274,8 +274,8 @@ class Detector (
             if (cnf > CONFIDENCE_THRESHOLD) {
                 val x = array[r]
                 val y = array[1 * numElements + r]
-                val h = array[2 * numElements + r]
-                val w = array[3 * numElements + r]
+                var h = array[2 * numElements + r]
+                var w = array[3 * numElements + r]
 
                 val angle = array[6 * numElements + r]
                 boundingBoxes.add(

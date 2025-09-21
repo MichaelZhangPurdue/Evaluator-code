@@ -24,6 +24,11 @@ class OverlayView @JvmOverloads constructor(
         boxPaint.strokeWidth = 8f
     }
 
+    fun returnDims() : Pair<Int, Int> {
+        println("NEW WIDTH AND HEIGHT: $width, $height")
+        return Pair(width, height)
+    }
+
     override fun onDraw(canvas: Canvas) {
         //val scaleX = width.toFloat() / imageWidth
         //val scaleY = height.toFloat() / imageHeight
