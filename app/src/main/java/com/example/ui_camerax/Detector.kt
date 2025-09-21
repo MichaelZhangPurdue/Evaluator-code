@@ -43,7 +43,7 @@ class Detector (
     private var yAvg: MutableList<Double>? = null
     private var frameCounter = 0
     private var stringYCoordHeights: MutableList<List<Int>> = mutableListOf()
-    private val numWaitFrames = 10
+    private val numWaitFrames = 5
     private var ogWidth: Int = 1
     private var ogHeight: Int = 1
 
@@ -60,7 +60,7 @@ class Detector (
         private const val INPUT_STANDARD_DEVIATION = 255f
         private val INPUT_IMAGE_TYPE = DataType.FLOAT32
         private val OUTPUT_IMAGE_TYPE = DataType.FLOAT32
-        private const val CONFIDENCE_THRESHOLD = 0.5F
+        private const val CONFIDENCE_THRESHOLD = 0.2F
     }
 
     init {
@@ -548,7 +548,6 @@ class Detector (
         n frames.
          */
 
-
         // sort coordinate points so points in consistent order
         val sortedCoords: MutableList<Point> = sortStringPoints(stringBoxCoords)
 
@@ -639,8 +638,22 @@ class Detector (
             string = null,
             angle = null
         )
-        stringPoints = results.stringResults
-        bowPoints = results.bowResults
+        if (results.bowResults != null) {
+            bowRepeat = 0
+            bowPoints = results.bowResults
+        } else if (results.stringResults == null && stringRepeat < 5 && stringPoints != null) {
+            classResults.classification = -1
+            stringRepeat++
+            results.stringResults = stringPoints!!.toMutableList()
+        }
+        if (results.stringResults != null) {
+            stringRepeat = 0
+            stringPoints = results.stringResults
+        } else if (results.bowResults == null && bowRepeat < 5 && bowPoints != null) {
+            classResults.classification = -1
+            bowRepeat++
+            results.bowResults = bowPoints!!.toMutableList()
+        }
         if (stringPoints == null && bowPoints == null) {
             classResults.classification = -2
             return classResults
@@ -650,25 +663,14 @@ class Detector (
             //need to do averaging of top two y coords
             classResults.string = results.stringResults
             averageYCoordinate(results.stringResults!!)
-            if (results.bowResults == null && bowRepeat < 5 && bowPoints != null) {
-                classResults.classification = -1
-                bowRepeat++
-                classResults.bow = bowPoints
-            }
             if (results.bowResults != null) {
                 classResults.bow = results.bowResults
-                if (results.stringResults == null && stringRepeat < 5 && stringPoints != null) {
-                    classResults.classification = -1
-                    stringRepeat++
-                    classResults.string = stringPoints
-                }
-                //This logic is wrong, will need to fix
             }
             if (results.bowResults != null && results.stringResults != null) {
                 updatePoints(results.stringResults!!, results.bowResults!!)
-                var midlines = getMidline()
-                var vert_lines = getVerticalLines()
-                var intersect_points = intersectsVertical(midlines, vert_lines)
+                val midlines = getMidline()
+                val vert_lines = getVerticalLines()
+                val intersect_points = intersectsVertical(midlines, vert_lines)
                 classResults.angle = bowAngle(midlines, vert_lines)
                 classResults.classification = intersect_points
                 return classResults
@@ -677,10 +679,6 @@ class Detector (
                 classResults.classification = -1
                 return classResults
             }
-        } else if (results.bowResults != null) {
-            classResults.bow = results.bowResults
-            classResults.classification = -1
-            return classResults
         } else {
             classResults.classification = -2
             return classResults
