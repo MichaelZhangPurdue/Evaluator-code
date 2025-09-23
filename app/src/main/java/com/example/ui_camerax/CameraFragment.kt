@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.google.mediapipe.examples.handlandmarker.fragment
-
+/*
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
@@ -369,3 +369,5 @@ class CameraFragment : Fragment(), HandLandmarkerHelper.CombinedLandmarkerListen
         }
     }
 }
+
+ */

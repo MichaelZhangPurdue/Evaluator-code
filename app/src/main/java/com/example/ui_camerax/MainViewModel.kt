@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.google.mediapipe.examples.handlandmarker
-
+/*
 import androidx.lifecycle.ViewModel
 
 /**
@@ -92,3 +92,5 @@ class MainViewModel : ViewModel() {
         _minPosePresenceConfidence = confidence
     }
 }
+
+ */

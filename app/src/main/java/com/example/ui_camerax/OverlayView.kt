@@ -60,6 +60,7 @@ class OverlayView @JvmOverloads constructor(
                     , boxPaint)
             }
             if (bowBox != null) {
+                println("DRAWING BOW BOX")
                 canvas.drawLine(bowBox[0].x.toFloat() * scaleX,
                     bowBox[0].y.toFloat() * scaleY,
                     bowBox[1].x.toFloat() * scaleX,

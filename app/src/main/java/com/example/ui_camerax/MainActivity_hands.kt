@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.google.mediapipe.examples.handlandmarker
-
+/*
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -44,3 +44,6 @@ class MainActivity : AppCompatActivity() {
        finish()
     }
 }
+
+
+ */
