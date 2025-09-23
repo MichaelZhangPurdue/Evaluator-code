@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.google.mediapipe.examples.handlandmarker
-
+/*
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
@@ -544,3 +544,5 @@ class HandLandmarkerHelper(
         fun onResults(resultBundle: CombinedResultBundle)
     }
 }
+
+ */

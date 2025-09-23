@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -28,8 +29,11 @@ import com.example.evaluator_kotlin.Detector
 import com.example.ui_camerax.databinding.ActivityMainBinding
 import java.nio.ByteBuffer
 import androidx.core.graphics.createBitmap
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import java.io.File
 import java.io.FileOutputStream
+import kotlin.math.max
 
 
 typealias LumaListener = (luma: Double) -> Unit
@@ -54,6 +58,7 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
     private lateinit var cameraExecutor: ExecutorService
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -65,6 +70,13 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
             startCamera()
         } else {
             requestPermissions()
+        }
+        enableEdgeToEdge()
+
+        ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
 
         // Set up the listeners for take photo and video capture buttons
@@ -99,17 +111,18 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
 
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
-                .setTargetRotation(viewBinding.viewFinder.display.rotation)
+                //.setTargetRotation(viewBinding.viewFinder.display.rotation)
                 .build()
 
             imageAnalyzer.setAnalyzer(cameraExecutor) { imageProxy ->
                 val bitmapBuffer =
-                    createBitmap(imageProxy.width, imageProxy.height    )
+                    createBitmap(imageProxy.width, imageProxy.height, Bitmap.Config.ARGB_8888)
                 imageProxy.use { bitmapBuffer.copyPixelsFromBuffer(imageProxy.planes[0].buffer) }
-
+                //println("PHONE ORIENTATION ${imageProxy.imageInfo.rotationDegrees}")
                 val matrix = Matrix().apply {
                     postRotate(imageProxy.imageInfo.rotationDegrees.toFloat())
                 }
+
                 val rotatedBitmap = Bitmap.createBitmap(
                     bitmapBuffer, 0, 0, bitmapBuffer.width, bitmapBuffer.height,
                     matrix, true
@@ -159,7 +172,8 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
         }
     }
 
-    override fun detected(results: Detector.YoloResults) {
+    override fun detected(results: Detector.YoloResults, sourceWidth: Int, sourceHeight: Int) {
+        /*
         if (!foundDims) {
             var dims: Pair<Int, Int> ?= null
             dims = overlayView.returnDims()
@@ -168,10 +182,33 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
                 detector?.setDimensions(dims)
             }
         }
-        println("DETECTED")
+
+         */
         val bowPoints = detector?.classify(results)
+
+        val overlayWidth = overlayView.width
+        val overlayHeight = overlayView.height
+        val scaleFactor = max(
+            overlayWidth.toFloat() / sourceWidth,
+            overlayHeight.toFloat() / sourceHeight
+        )
+        val scaledImageWidth = sourceWidth * scaleFactor
+        val scaledImageHeight = sourceHeight * scaleFactor
+        val offsetX = (scaledImageWidth - overlayWidth) / 2f
+        val offsetY = (scaledImageHeight - overlayHeight) / 2f
+        bowPoints?.bow?.forEach { point ->
+            point.x = (point.x * scaleFactor) - offsetX
+            point.y = (point.y * scaleFactor) - offsetY
+        }
+        bowPoints?.string?.forEach { point ->
+            point.x = (point.x * scaleFactor) - offsetX
+            point.y = (point.y * scaleFactor) - offsetY
+        }
+        println("DETECTED")
         runOnUiThread {
-            overlayView.updateResults(bowPoints!!)
+            if (bowPoints != null) {
+                overlayView.updateResults(bowPoints)
+            }
         }
         println(bowPoints)
     }

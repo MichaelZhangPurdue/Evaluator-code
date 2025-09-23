@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.google.mediapipe.examples.handlandmarker
-
+/*
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -184,3 +184,5 @@ class OverlayView(context: Context?, attrs: AttributeSet?) :
         private const val LANDMARK_STROKE_WIDTH = 8F
     }
 }
+
+ */

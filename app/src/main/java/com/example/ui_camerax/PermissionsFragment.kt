@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.google.mediapipe.examples.handlandmarker.fragment
-
+/*
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
@@ -90,3 +90,6 @@ class PermissionsFragment : Fragment() {
         }
     }
 }
+
+
+ */

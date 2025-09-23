@@ -44,8 +44,8 @@ class Detector (
     private var frameCounter = 0
     private var stringYCoordHeights: MutableList<List<Int>> = mutableListOf()
     private val numWaitFrames = 5
-    private var ogWidth: Int = 1
-    private var ogHeight: Int = 1
+    //private var ogWidth: Int = 1
+    //private var ogHeight: Int = 1
 
 
 
@@ -60,7 +60,7 @@ class Detector (
         private const val INPUT_STANDARD_DEVIATION = 255f
         private val INPUT_IMAGE_TYPE = DataType.FLOAT32
         private val OUTPUT_IMAGE_TYPE = DataType.FLOAT32
-        private const val CONFIDENCE_THRESHOLD = 0.2F
+        private const val CONFIDENCE_THRESHOLD = 0.1F
     }
 
     init {
@@ -144,12 +144,14 @@ class Detector (
         var x: Double,
         var y: Double
     )
-
+    /*
     fun setDimensions(dims: Pair<Int, Int>) {
         ogWidth = dims.first
         ogHeight = dims.second
         println("dims: $dims")
     }
+
+     */
 
 
     fun detect(frame: Bitmap){
@@ -188,13 +190,28 @@ class Detector (
 
         var bowConf = 0f
         var stringConf = 0f
+        val ogWidth = frame.width.toFloat()
+        val ogHeight = frame.height.toFloat()
 
         for (box in bestBoxes) {
             if (box.cls == 0 && box.conf > bowConf) {
-                results.bowResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, box.width * ogWidth, box.height * ogHeight, box.angle - Math.PI.toFloat() / 2).toMutableList()
+                results.bowResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, box.width * ogWidth, box.height * ogHeight, box.angle).toMutableList()
                 bowConf = box.conf
             } else if (box.cls == 1 && box.conf > stringConf) {
-                results.stringResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, box.width * ogWidth, box.height * ogHeight, box.angle).toMutableList()
+                var w = box.width
+                var h = box.height
+                var angle = box.angle
+                if (w > h) {
+                    // The model has predicted a "wide" string. Let's correct it.
+                    // 1. Swap the width and height.
+                    val tempW = w
+                    w = h
+                    h = tempW
+
+                    // 2. Adjust the angle by 90 degrees (PI / 2 radians) to compensate for the swap.
+                    angle += (Math.PI / 2).toFloat()
+                }
+                results.stringResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, w * ogWidth, h * ogHeight, angle).toMutableList()
                 stringConf = box.conf
             }
         }
@@ -206,7 +223,7 @@ class Detector (
         if (results.bowResults == null && results.stringResults == null) {
             listener.noDetect()
         } else {
-            listener.detected(results)
+            listener.detected(results, frame.width, frame.height)
             print(results)
         }
     }
@@ -248,8 +265,8 @@ class Detector (
         val halfW = w / 2
         val halfH = h / 2
         println("ANGLE $angleRad")
-        val cosA = cos(angleRad)
-        val sinA = sin(angleRad)
+        val cosA = cos(angleRad - Math.PI.toFloat() / 2)
+        val sinA = sin(angleRad - Math.PI.toFloat() / 2)
         val corners = listOf(
             Pair(-halfW, -halfH),
             Pair(halfW, -halfH),
@@ -317,15 +334,15 @@ class Detector (
             val sortedString = sortStringPoints(stringBox)
             stringPoints = sortedString
 
-            stringPoints!![0].y = yAvg!![0]
-            stringPoints!![1].y = yAvg!![1]
+            //stringPoints!![0].y = yAvg!![0]
+            //stringPoints!![1].y = yAvg!![1]
 
             //println("y_avg: $yAvg")
             //println("string_points: $stringPoints")
         }
 
     }
-
+    //
     fun sortStringPoints(pts: MutableList<Point>): MutableList<Point> {
         // Sort points by y
         val sortedPoints = pts.sortedBy {it.y }
@@ -549,7 +566,7 @@ class Detector (
          */
 
         // sort coordinate points so points in consistent order
-        val sortedCoords: MutableList<Point> = sortStringPoints(stringBoxCoords)
+        val sortedCoords: MutableList<Point> = stringBoxCoords
 
         // increase frame counter. create and add y coord list of each frame to one list
         frameCounter += 1
@@ -638,21 +655,25 @@ class Detector (
             string = null,
             angle = null
         )
-        if (results.bowResults != null) {
-            bowRepeat = 0
-            bowPoints = results.bowResults
-        } else if (results.stringResults == null && stringRepeat < 5 && stringPoints != null) {
-            classResults.classification = -1
-            stringRepeat++
-            results.stringResults = stringPoints!!.toMutableList()
-        }
         if (results.stringResults != null) {
             stringRepeat = 0
             stringPoints = results.stringResults
-        } else if (results.bowResults == null && bowRepeat < 5 && bowPoints != null) {
+        } else if (stringRepeat < 5 && stringPoints != null) {
+            classResults.classification = -1
+            stringRepeat++
+            results.stringResults = stringPoints!!.toMutableList()
+        } else {
+            stringPoints = null
+        }
+        if (results.bowResults != null) {
+            bowRepeat = 0
+            bowPoints = results.bowResults
+        } else if (bowRepeat < 5 && bowPoints != null) {
             classResults.classification = -1
             bowRepeat++
             results.bowResults = bowPoints!!.toMutableList()
+        } else {
+            bowPoints = null
         }
         if (stringPoints == null && bowPoints == null) {
             classResults.classification = -2
@@ -661,8 +682,8 @@ class Detector (
         if (results.stringResults != null) {
             results.stringResults = sortStringPoints(results.stringResults!!)
             //need to do averaging of top two y coords
-            classResults.string = results.stringResults
-            averageYCoordinate(results.stringResults!!)
+            //averageYCoordinate(results.stringResults!!)
+            classResults.bow = stringPoints
             if (results.bowResults != null) {
                 classResults.bow = results.bowResults
             }
@@ -692,7 +713,7 @@ class Detector (
 
     interface DetectorListener {
         fun noDetect()
-        fun detected(results: YoloResults)
+        fun detected(results: YoloResults, sourceWidth: Int, sourceHeight: Int)
     }
 
 }
