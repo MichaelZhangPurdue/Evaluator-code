@@ -69,11 +69,14 @@ class Detector (
             //this.setUseXNNPACK(true)
             //Log.i("Detector", "isDelegateSupportedOnThisDevice: ${CompatibilityList().isDelegateSupportedOnThisDevice}")
             //this.addDelegate(GpuDelegate(CompatibilityList().bestOptionsForThisDevice))
+            /*
             try {
                 this.addDelegate(GpuDelegate(CompatibilityList().bestOptionsForThisDevice))
             } catch (e: Exception) {
                 println("Gpu delegate failed")
             }
+
+             */
 
             if (CompatibilityList().isDelegateSupportedOnThisDevice) {
                 this.addDelegate(GpuDelegate(CompatibilityList().bestOptionsForThisDevice))
