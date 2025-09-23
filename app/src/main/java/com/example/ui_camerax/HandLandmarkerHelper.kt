@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.mediapipe.examples.handlandmarker
-/*
+package com.example.ui_camerax
+
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
@@ -22,7 +22,6 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.SystemClock
 import android.util.Log
-import androidx.annotation.VisibleForTesting
 import androidx.camera.core.ImageProxy
 import com.google.mediapipe.framework.image.BitmapImageBuilder
 import com.google.mediapipe.framework.image.MPImage
@@ -35,7 +34,6 @@ import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarker
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult
 import kotlin.math.abs
 import kotlin.math.acos
-import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -98,7 +96,7 @@ class HandLandmarkerHelper(
 
         when (currentDelegate) {
             DELEGATE_CPU -> baseOptionBuilder.setDelegate(Delegate.CPU)
-            DELEGATE_GPU -> baseOptionBuilder.setDelegate(Delegate.GPU)
+            //DELEGATE_GPU -> baseOptionBuilder.setDelegate(Delegate.GPU)
         }
 
         baseOptionBuilder.setModelAssetPath(MP_HAND_LANDMARKER_TASK)
@@ -544,5 +542,3 @@ class HandLandmarkerHelper(
         fun onResults(resultBundle: CombinedResultBundle)
     }
 }
-
- */

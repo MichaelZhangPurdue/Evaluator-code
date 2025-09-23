@@ -35,10 +35,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import com.google.mediapipe.examples.handlandmarker.HandLandmarkerHelper
-import com.google.mediapipe.examples.handlandmarker.MainViewModel
-import com.google.mediapipe.examples.handlandmarker.R
-import com.google.mediapipe.examples.handlandmarker.databinding.FragmentCameraBinding
+import com.example.ui_camerax.HandLandmarkerHelper
+import com.example.ui_camerax.MainViewModel
+import com.example.ui_camerax.R
+import com.example.ui_camerax.databinding.FragmentCameraBinding
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import java.util.Locale
 import java.util.concurrent.ExecutorService

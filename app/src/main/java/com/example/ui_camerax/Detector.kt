@@ -75,8 +75,8 @@ class Detector (
             } catch (e: Exception) {
                 println("Gpu delegate failed")
             }
-
-             */
+            */
+            
 
             if (CompatibilityList().isDelegateSupportedOnThisDevice) {
                 this.addDelegate(GpuDelegate(CompatibilityList().bestOptionsForThisDevice))

@@ -29,6 +29,7 @@ import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarker
 import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult
 import kotlin.math.max
 import kotlin.math.min
+import com.example.ui_camerax.R
 
 class OverlayView(context: Context?, attrs: AttributeSet?) :
     View(context, attrs) {

@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.ui_camerax"
-        minSdk = 21
+        minSdk = 24
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -63,4 +63,10 @@ dependencies {
     implementation(libs.tensorflow.lite.gpu)
     implementation(libs.tensorflow.lite.gpu.api)
     implementation(libs.tensorflow.lite.api)
+
+    implementation(libs.androidx.fragment)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui)
+
+    implementation(libs.mediapipe.tasks.vision)
 }

@@ -20,7 +20,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.mediapipe.examples.handlandmarker.databinding.ActivityMainBinding
+import com.example.ui_camerax.MainViewModel
+import com.example.ui_camerax.databinding.ActivityMainBinding
+import com.example.ui_camerax.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var activityMainBinding: ActivityMainBinding
@@ -39,10 +41,11 @@ class MainActivity : AppCompatActivity() {
             // ignore the reselection
         }
     }
-
+/*
     override fun onBackPressed() {
        finish()
     }
+    */
 }
 
 
