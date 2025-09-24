@@ -201,20 +201,7 @@ class Detector (
                 results.bowResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, box.width * ogWidth, box.height * ogHeight, box.angle).toMutableList()
                 bowConf = box.conf
             } else if (box.cls == 1 && box.conf > stringConf) {
-                var w = box.width
-                var h = box.height
-                var angle = box.angle
-                if (w > h) {
-                    // The model has predicted a "wide" string. Let's correct it.
-                    // 1. Swap the width and height.
-                    val tempW = w
-                    w = h
-                    h = tempW
-
-                    // 2. Adjust the angle by 90 degrees (PI / 2 radians) to compensate for the swap.
-                    angle += (Math.PI / 2).toFloat()
-                }
-                results.stringResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, w * ogWidth, h * ogHeight, angle).toMutableList()
+                results.stringResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, box.width * ogWidth, box.height * ogHeight, box.angle).toMutableList()
                 stringConf = box.conf
             }
         }
@@ -686,7 +673,7 @@ class Detector (
             results.stringResults = sortStringPoints(results.stringResults!!)
             //need to do averaging of top two y coords
             //averageYCoordinate(results.stringResults!!)
-            classResults.bow = stringPoints
+            classResults.bow = results.bowResults
             if (results.bowResults != null) {
                 classResults.bow = results.bowResults
             }
