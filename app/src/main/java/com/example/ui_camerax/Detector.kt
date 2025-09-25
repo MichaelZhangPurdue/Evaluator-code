@@ -1,4 +1,4 @@
-package com.example.evaluator_kotlin
+package com.example.ui_camerax
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -76,7 +76,7 @@ class Detector (
                 println("Gpu delegate failed")
             }
             */
-            
+
 
             if (CompatibilityList().isDelegateSupportedOnThisDevice) {
                 this.addDelegate(GpuDelegate(CompatibilityList().bestOptionsForThisDevice))

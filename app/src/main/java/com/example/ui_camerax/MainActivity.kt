@@ -25,7 +25,7 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import com.example.evaluator_kotlin.Detector
+import com.example.ui_camerax.Detector
 import com.example.ui_camerax.databinding.ActivityMainBinding
 import java.nio.ByteBuffer
 import androidx.core.graphics.createBitmap
