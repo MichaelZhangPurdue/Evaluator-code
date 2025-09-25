@@ -669,29 +669,23 @@ class Detector (
             classResults.classification = -2
             return classResults
         }
-        if (results.stringResults != null) {
-            results.stringResults = sortStringPoints(results.stringResults!!)
-            //need to do averaging of top two y coords
-            //averageYCoordinate(results.stringResults!!)
+        if (results.stringResults == null) {
+            classResults.classification = -1
             classResults.bow = results.bowResults
-            if (results.bowResults != null) {
-                classResults.bow = results.bowResults
-            }
-            if (results.bowResults != null && results.stringResults != null) {
-                updatePoints(results.stringResults!!, results.bowResults!!)
-                val midlines = getMidline()
-                val vert_lines = getVerticalLines()
-                val intersect_points = intersectsVertical(midlines, vert_lines)
-                classResults.angle = bowAngle(midlines, vert_lines)
-                classResults.classification = intersect_points
-                return classResults
-
-            } else {
-                classResults.classification = -1
-                return classResults
-            }
+            return classResults
+        } else if (results.bowResults == null) {
+            classResults.classification = -1
+            classResults.string = results.stringResults
+            return classResults
         } else {
-            classResults.classification = -2
+            classResults.string = results.stringResults
+            classResults.bow = results.bowResults
+            updatePoints(results.stringResults!!, results.bowResults!!)
+            val midlines = getMidline()
+            val vert_lines = getVerticalLines()
+            val intersect_points = intersectsVertical(midlines, vert_lines)
+            classResults.angle = bowAngle(midlines, vert_lines)
+            classResults.classification = intersect_points
             return classResults
         }
     }
