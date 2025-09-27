@@ -1,4 +1,4 @@
-package com.example.evaluator_kotlin
+package com.example.ui_camerax
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -75,8 +75,8 @@ class Detector (
             } catch (e: Exception) {
                 println("Gpu delegate failed")
             }
+            */
 
-             */
 
             if (CompatibilityList().isDelegateSupportedOnThisDevice) {
                 this.addDelegate(GpuDelegate(CompatibilityList().bestOptionsForThisDevice))
@@ -201,20 +201,11 @@ class Detector (
                 results.bowResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, box.width * ogWidth, box.height * ogHeight, box.angle).toMutableList()
                 bowConf = box.conf
             } else if (box.cls == 1 && box.conf > stringConf) {
-                var w = box.width
-                var h = box.height
-                var angle = box.angle
-                if (w > h) {
-                    // The model has predicted a "wide" string. Let's correct it.
-                    // 1. Swap the width and height.
-                    val tempW = w
-                    w = h
-                    h = tempW
-
-                    // 2. Adjust the angle by 90 degrees (PI / 2 radians) to compensate for the swap.
-                    angle += (Math.PI / 2).toFloat()
+                if (box.width > box.height) {
+                    results.stringResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, box.width * ogWidth, box.height * ogHeight, box.angle - Math.PI.toFloat() / 2).toMutableList()
+                } else {
+                    results.stringResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, box.width * ogWidth, box.height * ogHeight, box.angle).toMutableList()
                 }
-                results.stringResults = rotatedRectToPoints(box.x * ogWidth, box.y * ogHeight, w * ogWidth, h * ogHeight, angle).toMutableList()
                 stringConf = box.conf
             }
         }
@@ -682,29 +673,23 @@ class Detector (
             classResults.classification = -2
             return classResults
         }
-        if (results.stringResults != null) {
-            results.stringResults = sortStringPoints(results.stringResults!!)
-            //need to do averaging of top two y coords
-            //averageYCoordinate(results.stringResults!!)
-            classResults.bow = stringPoints
-            if (results.bowResults != null) {
-                classResults.bow = results.bowResults
-            }
-            if (results.bowResults != null && results.stringResults != null) {
-                updatePoints(results.stringResults!!, results.bowResults!!)
-                val midlines = getMidline()
-                val vert_lines = getVerticalLines()
-                val intersect_points = intersectsVertical(midlines, vert_lines)
-                classResults.angle = bowAngle(midlines, vert_lines)
-                classResults.classification = intersect_points
-                return classResults
-
-            } else {
-                classResults.classification = -1
-                return classResults
-            }
+        if (results.stringResults == null) {
+            classResults.classification = -1
+            classResults.bow = results.bowResults
+            return classResults
+        } else if (results.bowResults == null) {
+            classResults.classification = -1
+            classResults.string = results.stringResults
+            return classResults
         } else {
-            classResults.classification = -2
+            classResults.string = results.stringResults
+            classResults.bow = results.bowResults
+            updatePoints(results.stringResults!!, results.bowResults!!)
+            val midlines = getMidline()
+            val vert_lines = getVerticalLines()
+            val intersect_points = intersectsVertical(midlines, vert_lines)
+            classResults.angle = bowAngle(midlines, vert_lines)
+            classResults.classification = intersect_points
             return classResults
         }
     }

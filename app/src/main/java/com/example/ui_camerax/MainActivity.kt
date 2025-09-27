@@ -25,26 +25,30 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import com.example.evaluator_kotlin.Detector
+import com.example.ui_camerax.Detector
 import com.example.ui_camerax.databinding.ActivityMainBinding
 import java.nio.ByteBuffer
 import androidx.core.graphics.createBitmap
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.mediapipe.examples.handlandmarker.HandLandmarkerHelper
+import com.google.mediapipe.proto.MediaPipeLoggingEnumsProto.ErrorCode
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.max
+import com.google.mediapipe.tasks.vision.core.RunningMode
 
 
 typealias LumaListener = (luma: Double) -> Unit
 
 
 
-class MainActivity : AppCompatActivity(), Detector.DetectorListener {
+class MainActivity : AppCompatActivity(), Detector.DetectorListener, HandLandmarkerHelper.CombinedLandmarkerListener {
     private lateinit var viewBinding: ActivityMainBinding
 
     private var imageCapture: ImageCapture? = null
     private var detector: Detector? = null
+    private lateinit var handLandmarkerHelper: HandLandmarkerHelper
 
 
     private var videoCapture: VideoCapture<Recorder>? = null
@@ -93,6 +97,16 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
 
     private fun startCamera() {
         detector = Detector(this, this)
+        handLandmarkerHelper = HandLandmarkerHelper(
+            context = this,
+            runningMode = RunningMode.LIVE_STREAM,
+            minHandDetectionConfidence = HandLandmarkerHelper.DEFAULT_HAND_DETECTION_CONFIDENCE,
+            minHandTrackingConfidence = HandLandmarkerHelper.DEFAULT_HAND_TRACKING_CONFIDENCE,
+            minHandPresenceConfidence = HandLandmarkerHelper.DEFAULT_HAND_PRESENCE_CONFIDENCE,
+            maxNumHands = HandLandmarkerHelper.DEFAULT_NUM_HANDS,
+            currentDelegate = HandLandmarkerHelper.DELEGATE_CPU,
+            combinedLandmarkerHelperListener = this
+        )
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener({
@@ -117,7 +131,14 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
             imageAnalyzer.setAnalyzer(cameraExecutor) { imageProxy ->
                 val bitmapBuffer =
                     createBitmap(imageProxy.width, imageProxy.height, Bitmap.Config.ARGB_8888)
-                imageProxy.use { bitmapBuffer.copyPixelsFromBuffer(imageProxy.planes[0].buffer) }
+                imageProxy.use {
+                    bitmapBuffer.copyPixelsFromBuffer(imageProxy.planes[0].buffer)
+                    imageProxy.planes[0].buffer.rewind()
+                    handLandmarkerHelper.detectLiveStream(
+                        imageProxy, false
+                    )
+
+                }
                 //println("PHONE ORIENTATION ${imageProxy.imageInfo.rotationDegrees}")
                 val matrix = Matrix().apply {
                     postRotate(imageProxy.imageInfo.rotationDegrees.toFloat())
@@ -211,6 +232,14 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
             }
         }
         println(bowPoints)
+    }
+
+    override fun onError(error: String, errorCode: Int) {
+        Log.e("Hands", "Error from HandLandmarkerHelper: $error")
+    }
+
+    override fun onResults(resultBundle: HandLandmarkerHelper.CombinedResultBundle) {
+        Log.i("Hands", "Hand/Pose landmarks detected. Inference time: ${resultBundle.inferenceTime}ms $resultBundle")
     }
 
     private val activityResultLauncher =

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package com.google.mediapipe.examples.handlandmarker
-/*
+
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
@@ -512,7 +512,7 @@ class HandLandmarkerHelper(
     }
 
     companion object {
-        const val TAG = "CombinedLandmarkerHelper"
+        const val TAG = "hands"
         private const val MP_HAND_LANDMARKER_TASK = "hand_landmarker.task"
 
         const val DELEGATE_CPU = 0
@@ -544,5 +544,3 @@ class HandLandmarkerHelper(
         fun onResults(resultBundle: CombinedResultBundle)
     }
 }
-
- */

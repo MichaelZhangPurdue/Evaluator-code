@@ -4,7 +4,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.example.evaluator_kotlin.Detector
+import com.example.ui_camerax.Detector
 import com.example.ui_camerax.R
 import kotlin.text.toFloat
 
